@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { TrelloService } from '../trello/trello.api';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,14 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'app';
+
+  constructor(private api: TrelloService) {
+    
+  }
+
+  onDeleteClick(id) {
+    this.api.delete(id).subscribe(() => {
+      console.log('Deleted');
+    });
+  }
 }
