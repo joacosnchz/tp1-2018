@@ -1,12 +1,40 @@
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-</div>
-<h2>Cards</h2>
-<ul>
-  <li *ngFor="let card of cards">
-    {{ card.name }} - <a href="#" (click)="onDeleteClick(card.id)">Eliminar</a>
-  </li>
-</ul>
+<div class="row">
+	<div class="col">
+		<div class="card">
+			<div class="card-header">To do</div>
+			<div class="card-body">
+			<ul>
+				<li *ngFor="let card of todoCards">
+				{{ card.name }} - <a href="#" (click)="onDeleteClick(card.id)">Eliminar</a>
+				</li>
+			</ul>
+			</div>
+		</div>
+	</div>
 
+	<div class="col">
+		<div class="card">
+			<div class="card-header">Doing</div>
+			<div class="card-body">
+				<ul>
+				<li *ngFor="let card of doingCards">
+					{{ card.name }} - <a href="#" (click)="onDeleteClick(card.id)">Eliminar</a>
+				</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	<div class="col">
+		<div class="card">
+			<div class="card-header">Done</div>
+			<div class="card-body">
+				<ul>
+				<li *ngFor="let card of doneCards">
+					{{ card.name }} - <a href="#" (click)="onDeleteClick(card.id)">Eliminar</a>
+				</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>

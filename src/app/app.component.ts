@@ -7,13 +7,12 @@ import { TrelloService } from '../trello/trello.api';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'app';
-  cards;
+  todoCards;
 
   constructor(private api: TrelloService) {
-    this.cards = new Array();
+    this.todoCards = new Array();
     api.getAll().subscribe((data) => {
-      this.cards = data;
+      this.todoCards = data;
     });
   }
 
