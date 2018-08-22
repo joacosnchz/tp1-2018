@@ -1,0 +1,18 @@
+<table>
+	<form action="#" #userForm>
+		<input type="hidden" name="id" [(ngModel)]="card.id">
+		<tr>
+			<td><label for="nombre">nombre</label></td>
+			<td><input type="text" name="nombre" [(ngModel)]="card.nombre"></td>
+		</tr>
+		<tr>
+			<td><label for="desc">descripcion</label></td>
+			<td><input type="text" name="desc" [(ngModel)]="card.desc"></td>
+		</tr>
+		<tr>
+			<td><button (click)="onClickAceptar($event)">Aceptar</button></td>
+			<td><button type="reset">Cancelar</button></td>
+		</tr>
+	</form>
+	
+</table>

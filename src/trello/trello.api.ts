@@ -18,4 +18,8 @@ export class TrelloService {
     delete(id) {
         return this.http.delete(this.endpoint + '/cards/' + id + '?' + this.credentials);
     }
+
+    newCard(name, desc){
+        return this.http.post(this.endpoint + '/cards?name=' + name + '&desc=' + desc + '&idList=5b6b420b6125170fa01f86f0' + '&' + this.credentials, '');
+    }
 }

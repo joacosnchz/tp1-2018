@@ -4,9 +4,11 @@
   </h1>
 </div>
 <h2>Cards</h2>
+<a href="/newcard">Nueva</a>
 <ul>
   <li *ngFor="let card of cards">
     {{ card.name }} - <a href="#" (click)="onDeleteClick(card.id)">Eliminar</a>
   </li>
 </ul>
 
+<router-outlet></router-outlet>
