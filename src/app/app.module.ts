@@ -6,24 +6,20 @@ import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { NewcardComponent } from './newcard/newcard.component';
-import { AppRoutingModule } from './/app-routing.module';
-import { RouterModule, Routes } from '@angular/router';
-
-const routes: Routes = [
-  { path: 'newcard', component: NewcardComponent }
-];
+import { routing } from './app-routing.module';
+import { CardListComponent } from './cardlist/cardlist.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NewcardComponent,
+    CardListComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpClientModule,
-    AppRoutingModule,
-    RouterModule.forRoot(routes)
+    routing
   ],
   providers: [
     TrelloService

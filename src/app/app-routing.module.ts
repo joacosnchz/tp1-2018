@@ -1,8 +1,11 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
+import { NewcardComponent } from './newcard/newcard.component';
+import { CardListComponent } from './cardlist/cardlist.component';
 
-@NgModule({
-  exports: [ RouterModule ]
-})
-export class AppRoutingModule {}
+const routes: Routes = [
+  { path: '', redirectTo: 'cards', pathMatch: 'full' }, // default route
+  { path: 'newcard', component: NewcardComponent },
+  { path: 'cards', component: CardListComponent }
+];
+
+export const routing = RouterModule.forRoot(routes);
