@@ -8,12 +8,14 @@ import { AppComponent } from './app.component';
 import { NewcardComponent } from './newcard/newcard.component';
 import { routing } from './app-routing.module';
 import { CardListComponent } from './cardlist/cardlist.component';
+import { CardDetailComponent } from './carddetail/carddetail.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NewcardComponent,
     CardListComponent,
+    CardDetailComponent,
   ],
   imports: [
     BrowserModule,
