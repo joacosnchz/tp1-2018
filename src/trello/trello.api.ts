@@ -15,6 +15,10 @@ export class TrelloService {
         return this.http.get(this.endpoint + '/boards/' + this.board + '/cards?' + this.credentials);
     }
 
+    getCard(card){
+        return this.http.get(this.endpoint + '/cards/' + card.id + '?' + this.credentials);
+    }
+
     delete(id) {
         return this.http.delete(this.endpoint + '/cards/' + id + '?' + this.credentials);
     }

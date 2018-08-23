@@ -1,40 +1,16 @@
 <div class="row">
-	<div class="col">
-		<div class="card">
-			<div class="card-header">To do</div>
-			<div class="card-body">
-			<ul>
-				<li *ngFor="let card of todoCards">
-				{{ card.name }} - <a href="#" (click)="onDeleteClick($event, card.id)">Eliminar</a>
-				</li>
-			</ul>
-			</div>
-		</div>
-	</div>
 
-	<div class="col">
+	<div class="col" *ngFor="let list of lists">
 		<div class="card">
-			<div class="card-header">Doing</div>
+			<div class="card-header">{{list.name}}</div>
 			<div class="card-body">
 				<ul>
-				<li *ngFor="let card of doingCards">
-					{{ card.name }} - <a href="#" (click)="onDeleteClick($event, card.id)">Eliminar</a>
-				</li>
+					<li *ngFor="let card of list.data">
+						<a [routerLink]="['/details', card.id]">{{ card.name }}</a> - <a href="#" (click)="onDeleteClick($event, card.id)">Eliminar</a>
+					</li>
 				</ul>
 			</div>
 		</div>
 	</div>
 
-	<div class="col">
-		<div class="card">
-			<div class="card-header">Done</div>
-			<div class="card-body">
-				<ul>
-				<li *ngFor="let card of doneCards">
-					{{ card.name }} - <a href="#" (click)="onDeleteClick($event, card.id)">Eliminar</a>
-				</li>
-				</ul>
-			</div>
-		</div>
-	</div>
 </div>
