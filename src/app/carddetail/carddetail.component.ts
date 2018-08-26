@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { TrelloService }  from '../../trello/trello.api';
 
 @Component({
@@ -8,18 +8,30 @@ import { TrelloService }  from '../../trello/trello.api';
   styleUrls: ['./carddetail.component.css']
 })
 export class CardDetailComponent implements OnInit {
+    @Input() card:any = {};
+    mostrarError = false;
 
-  @Input() card:any = {};
+    constructor(private router : Router, private route: ActivatedRoute, private api : TrelloService) { }
 
-  constructor(private route: ActivatedRoute, private api : TrelloService) { }
+    ngOnInit() {
+        this.route.params.subscribe(params => {
+            this.card.id = params['id'];
+            this.api.getCard(this.card).subscribe(card => {
+                this.card = card;
+            });
+        });
+    }
 
-  ngOnInit() {
-    this.route.params.subscribe(params => {
-      this.card.id = params['id'];
-      this.api.getCard(this.card).subscribe(card =>{
-        this.card = card;
-      });
-   });
-  }
+    onSubmit(e) {
+        e.preventDefault();
+
+        this.api.update(this.card).subscribe(() => {
+            this.router.navigate(['/cards']);
+        }, error => {
+            this.mostrarError = true;
+            e.target.innerHTML = 'Aceptar';
+            e.target.className = 'btn btn-primary';
+        });
+    }
 
 }

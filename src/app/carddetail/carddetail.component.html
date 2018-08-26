@@ -1,14 +1,21 @@
-<table>
+<div class="alert alert-danger" role="alert" *ngIf="mostrarError">
+    Hubo un problema actualizando la carta, por favor intente nuevamente.
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
 
-  <form action="#" #userForm>
-    <tr>
-      <td><label for="nombre">Nombre</label></td>
-      <td><label for="nombre">{{card.name}}</label></td>
-    </tr>
-    <tr>
-      <td><label for="desc">Descripcion</label></td>
-      <td><label for="nombre">{{card.desc}}</label></td>
-    </tr>
-  </form>
+<form action="#" #userForm>
+	<div class="form-group">
+        <label for="nombre">Nombre</label>
+        <input type="text" class="form-control" name="nombre" id="nombre" [(ngModel)]="card.name">
+    </div>
+    
+    <div class="form-group">
+        <label for="desc">Descripcion</label>
+        <input type="text" class="form-control" name="descripcion" id="desc" [(ngModel)]="card.desc" >
+    </div>
 
-</table>
+    <button type="submit" class="btn btn-primary" (click)="onSubmit($event)">Aceptar</button>
+    <a href="/cards" class="btn">Cancelar</a>
+</form>
