@@ -16,6 +16,13 @@
         <input type="text" class="form-control" name="descripcion" id="desc" [(ngModel)]="card.desc" >
     </div>
 
+    <div class="form-group">
+        <label for="list">Lista</label>
+        <select id="list" class="form-control" name="lista" [(ngModel)]="card.idList">
+            <option *ngFor="let list of lists" value="{{ list.id }}">{{ list.name }}</option>
+        </select>
+    </div>
+
     <button type="submit" class="btn btn-primary" (click)="onSubmit($event)">Aceptar</button>
     <a href="/cards" class="btn">Cancelar</a>
 </form>
