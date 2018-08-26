@@ -47,4 +47,12 @@ export class TrelloService {
 
         return null;
     }
+
+    getCardAttachments(idCard) {
+        return this.http.get(this.endpoint + '/cards/' + idCard + '/attachments?' + this.credentials);
+    }
+
+    deleteAttachment(idCard, idAttachment) {
+        return this.http.delete(this.endpoint + '/cards/' + idCard + '/attachments/' + idAttachment + '?' + this.credentials);
+    }
 }

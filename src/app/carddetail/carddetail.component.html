@@ -5,6 +5,13 @@
     </button>
 </div>
 
+<div class="alert alert-danger" role="alert" *ngIf="mostrarErrorAdjuntos">
+        Hubo un problema eliminando el adjunto, por favor intente nuevamente.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
 <form action="#" #userForm>
 	<div class="form-group">
         <label for="nombre">Nombre</label>
@@ -22,7 +29,18 @@
             <option *ngFor="let list of lists" value="{{ list.id }}">{{ list.name }}</option>
         </select>
     </div>
+    
+    Adjuntos
+    <ul>
+        <li *ngIf="!attachments?.length > 0">Ningun adjunto</li>
+        <li *ngFor="let attachment of attachments">
+            <a href="{{ attachment.url }}" target="_blank">{{ attachment.name }}</a>
+            <a href="#" (click)="deleteAttachment($event, attachment.id)" style="color:red"><span aria-hidden="true">&times;</span></a>
+        </li>
+    </ul>
 
-    <button type="submit" class="btn btn-primary" (click)="onSubmit($event)">Aceptar</button>
-    <a href="/cards" class="btn">Cancelar</a>
+    <div class="row">
+        <button type="submit" class="btn btn-primary" (click)="onSubmit($event)" #submitButton>Aceptar</button>
+        <a href="/cards" class="btn">Cancelar</a>
+    </div>
 </form>
