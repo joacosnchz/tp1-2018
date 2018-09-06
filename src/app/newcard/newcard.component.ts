@@ -1,5 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { TrelloService } from '../../trello/trello.api';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-newcard',
@@ -7,10 +8,12 @@ import { TrelloService } from '../../trello/trello.api';
   styleUrls: ['./newcard.component.css']
 })
 export class NewcardComponent implements OnInit {
-  @Input() card;
-	@Output() submitClicked = new EventEmitter<any>();
+    @Input() card;
+    @Output() submitClicked = new EventEmitter<any>();
+    lists;
   
-	constructor(private api: TrelloService) { 
+	constructor(private router : Router, private api: TrelloService) { 
+        this.lists = api.getLists();
 	}
 
 	ngOnInit() {
@@ -21,14 +24,23 @@ export class NewcardComponent implements OnInit {
 		this.card = {
 			id: '',
 			nombre: '',
-			desc: ''
+            desc: '',
+            idList: '',
+            attachment: null
 		};
 	}
 
-	onClickAceptar(event) {
-		this.api.newCard(this.card.nombre, this.card.desc).subscribe(() => {
-      console.log('Added');
-    });
-		this.initCard();
+	onClickAceptar(e, attachment) {
+        e.preventDefault();
+
+		this.api.newCard(this.card).subscribe((createdCard:any) => {
+            this.api.newAttachment(createdCard.id, attachment.files[0]).subscribe(() => {
+                this.router.navigate(['/cards']);
+            }, (err) => {
+                console.log(err);
+            });
+        }, (err) => {
+            console.log(err);
+        }); 
 	}
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TrelloService }  from '../../trello/trello.api';
+import { dashCaseToCamelCase } from '@angular/compiler/src/util';
 
 @Component({
   selector: 'app-cardlist',
@@ -27,9 +28,19 @@ export class CardListComponent implements OnInit {
   }
 
   getAllCards() {
-    this.api.getAll().subscribe((data) => {
+    this.api.getTodo().subscribe((data) => {
       this.todoCards = data;
       this.updateLists();
+    });
+
+    this.api.getDoing().subscribe((data) => {
+        this.doingCards = data;
+        this.updateLists();
+    });
+
+    this.api.getDone().subscribe((data) => {
+        this.doneCards = data;
+        this.updateLists();
     });
   }
 

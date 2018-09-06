@@ -1,18 +1,31 @@
-<table>
-	<form action="#" #userForm>
-		<input type="hidden" name="id" [(ngModel)]="card.id">
-		<tr>
-			<td><label for="nombre">nombre</label></td>
-			<td><input type="text" name="nombre" [(ngModel)]="card.nombre"></td>
-		</tr>
-		<tr>
-			<td><label for="desc">descripcion</label></td>
-			<td><input type="text" name="desc" [(ngModel)]="card.desc"></td>
-		</tr>
-		<tr>
-			<td><button (click)="onClickAceptar($event)">Aceptar</button></td>
-			<td><button type="reset">Cancelar</button></td>
-		</tr>
-	</form>
+<form action="#" #userForm enctype="multipart/form-data">
+    <input type="hidden" name="id" [(ngModel)]="card.id">
+
+    <div class="form-group">
+        <label for="nombre">Nombre</label>
+        <input type="text" class="form-control" name="nombre" id="nombre" [(ngModel)]="card.nombre" required="required">
+    </div>
+
+    <div class="form-group">
+        <label for="desc">Descripcion</label>
+        <input type="text" class="form-control" name="desc" id="desc" [(ngModel)]="card.desc" required="required">
+    </div>
+
+    <div class="form-group">
+        <label for="list">Lista</label>
+        <select id="list" class="form-control" name="lista" id="lista" [(ngModel)]="card.idList" required="required">
+            <option *ngFor="let list of lists" value="{{ list.id }}">{{ list.name }}</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="attachment">Adjunto</label>
+        <input type="file" class="form-control" #attachment name="attachment" id="attachment" [(ngModel)]="card.attachment">
+    </div>
+
+    <div class="row">
+        <button type="submit" class="btn btn-primary" (click)="onClickAceptar($event, attachment)">Aceptar</button>
+        <a href="/cards" class="btn">Cancelar</a>
+    </div>
+</form>
 	
-</table>

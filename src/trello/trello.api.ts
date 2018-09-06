@@ -18,6 +18,18 @@ export class TrelloService {
         return this.http.get(this.endpoint + '/boards/' + this.board + '/cards?' + this.credentials);
     }
 
+    getTodo() {
+        return this.http.get(this.endpoint + '/lists/' + this.lists[0].id + '/cards?' + this.credentials);
+    }
+
+    getDoing() {
+        return this.http.get(this.endpoint + '/lists/' + this.lists[1].id + '/cards?' + this.credentials);
+    }
+
+    getDone() {
+        return this.http.get(this.endpoint + '/lists/' + this.lists[2].id + '/cards?' + this.credentials);
+    }
+
     getCard(card){
         return this.http.get(this.endpoint + '/cards/' + card.id + '?' + this.credentials);
     }
@@ -26,8 +38,15 @@ export class TrelloService {
         return this.http.delete(this.endpoint + '/cards/' + id + '?' + this.credentials);
     }
 
-    newCard(name, desc){
-        return this.http.post(this.endpoint + '/cards?name=' + name + '&desc=' + desc + '&idList=5b6b420b6125170fa01f86f0' + '&' + this.credentials, '');
+    newCard(card){
+        return this.http.post(this.endpoint + '/cards?' + this.credentials, {name:  card.nombre, desc: card.desc, idList: card.idList});
+    }
+
+    newAttachment(idCard, attachment) {
+        let formData:FormData = new FormData();
+        formData.append('file', attachment, attachment.name);
+
+        return this.http.post(this.endpoint + '/cards/' + idCard + '/attachments?' + this.credentials, formData);
     }
 
     update(card) {
