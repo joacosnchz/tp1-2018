@@ -33,18 +33,21 @@ export class NewcardComponent implements OnInit {
 		};
 	}
 
-	onClickAceptar(e, attachment) {
-        e.preventDefault();
+	onClickAceptar(attachment) {
         this.cargando = true;
 
 		this.api.newCard(this.card).subscribe((createdCard:any) => {
-            this.api.newAttachment(createdCard.id, attachment.files[0]).subscribe(() => {
+            if(attachment.files[0]) {
+                this.api.newAttachment(createdCard.id, attachment.files[0]).subscribe(() => {
+                    this.router.navigate(['/cards']);
+                }, err => {
+                    console.log(err);
+                    this.mostrarErrorAdjunto = true;
+                    this.cargando = false;
+                });
+            } else {
                 this.router.navigate(['/cards']);
-            }, err => {
-                console.log(err);
-                this.mostrarErrorAdjunto = true;
-                this.cargando = false;
-            });
+            }
         }, err => {
             console.log(err);
             this.mostrarErrorCarga = true;

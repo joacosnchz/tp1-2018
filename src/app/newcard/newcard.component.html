@@ -6,22 +6,22 @@
     Hubo un problema cargando el adjunto, por favor intente nuevamente.
 </div>
 
-<form action="#" #userForm enctype="multipart/form-data">
+<form action="#" (ngSubmit)="onClickAceptar(attachment)" enctype="multipart/form-data">
     <input type="hidden" name="id" [(ngModel)]="card.id">
 
     <div class="form-group">
         <label for="nombre">Nombre</label>
-        <input type="text" class="form-control" name="nombre" id="nombre" [(ngModel)]="card.nombre" required="required">
+        <input type="text" #nombreControl="ngModel" class="form-control" name="nombre" id="nombre" [(ngModel)]="card.nombre" required>
     </div>
 
     <div class="form-group">
         <label for="desc">Descripcion</label>
-        <input type="text" class="form-control" name="desc" id="desc" [(ngModel)]="card.desc" required="required">
+        <input type="text" #descripcionControl="ngModel" class="form-control" name="desc" id="desc" [(ngModel)]="card.desc" required>
     </div>
 
     <div class="form-group">
         <label for="list">Lista</label>
-        <select id="list" class="form-control" name="lista" id="lista" [(ngModel)]="card.idList" required="required">
+        <select id="list" #listaControl="ngModel" class="form-control" name="lista" id="lista" [(ngModel)]="card.idList" required="required">
             <option *ngFor="let list of lists" value="{{ list.id }}">{{ list.name }}</option>
         </select>
     </div>
@@ -32,7 +32,7 @@
     </div>
 
     <div class="row">
-        <button type="submit" class="btn btn-primary" *ngIf="!cargando" (click)="onClickAceptar($event, attachment)">Aceptar</button>
+        <button type="submit" [disabled]="!nombreControl.valid || !descripcionControl.valid || !listaControl.valid" class="btn btn-primary" *ngIf="!cargando">Aceptar</button>
         <button class="btn btn-secondary" *ngIf="cargando" disabled="disabled">Cargando...</button>
         <a href="/cards" class="btn">Cancelar</a>
     </div>

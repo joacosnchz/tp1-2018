@@ -37,8 +37,7 @@ export class CardDetailComponent implements OnInit {
         });
     }
 
-    onSubmit(e, attachment) {
-        e.preventDefault();
+    onSubmit(attachment) {
         this.cargando = true;
 
         this.api.update(this.card).subscribe(() => {
@@ -57,7 +56,7 @@ export class CardDetailComponent implements OnInit {
             console.log(error);
             this.mostrarError = true;
             this.cargando = false;
-        });
+        }); 
     }
 
     deleteAttachment(e, idAttachment) {

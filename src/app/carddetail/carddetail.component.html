@@ -10,20 +10,20 @@
     Hubo un problema cargando el adjunto, por favor intente nuevamente.
 </div>
 
-<form action="#" #userForm>
+<form action="#" (ngSubmit)="onSubmit(attachment)" #userForm>
 	<div class="form-group">
         <label for="nombre">Nombre</label>
-        <input type="text" class="form-control" name="nombre" id="nombre" [(ngModel)]="card.name">
+        <input type="text" #nombreControl="ngModel" required class="form-control" name="nombre" id="nombre" [(ngModel)]="card.name">
     </div>
     
     <div class="form-group">
         <label for="desc">Descripcion</label>
-        <input type="text" class="form-control" name="descripcion" id="desc" [(ngModel)]="card.desc" >
+        <input type="text" #descriptionControl="ngModel" required class="form-control" name="descripcion" id="desc" [(ngModel)]="card.desc" >
     </div>
 
     <div class="form-group">
         <label for="list">Lista</label>
-        <select id="list" class="form-control" name="lista" [(ngModel)]="card.idList">
+        <select id="list" #listaControl="ngModel" required="required" class="form-control" name="lista" [(ngModel)]="card.idList">
             <option *ngFor="let list of lists" value="{{ list.id }}">{{ list.name }}</option>
         </select>
     </div>
@@ -43,7 +43,7 @@
     </ul>
 
     <div class="row">
-        <button type="submit" class="btn btn-primary" *ngIf="!cargando" (click)="onSubmit($event, attachment)" #submitButton>Aceptar</button>
+        <button type="submit" [disabled]="!descriptionControl.valid || !nombreControl.valid || !listaControl.valid" class="btn btn-primary" *ngIf="!cargando">Aceptar</button>
         <button class="btn btn-secondary" *ngIf="cargando">Cargando...</button>
         <a href="/cards" class="btn">Cancelar</a>
     </div>
