@@ -6,11 +6,18 @@
 </div>
 
 <div class="alert alert-danger" role="alert" *ngIf="mostrarErrorAdjuntos">
-        Hubo un problema eliminando el adjunto, por favor intente nuevamente.
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
+    Hubo un problema eliminando el adjunto, por favor intente nuevamente.
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<div class="alert alert-danger" role="alert" *ngIf="mostrarErrorNuevoAdjunto">
+    Hubo un problema cargando el adjunto, por favor intente nuevamente.
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
 
 <form action="#" #userForm>
 	<div class="form-group">
@@ -29,6 +36,11 @@
             <option *ngFor="let list of lists" value="{{ list.id }}">{{ list.name }}</option>
         </select>
     </div>
+
+    <div class="form-group">
+        <label for="attachment">Agregar adjunto</label>
+        <input type="file" class="form-control" #attachment name="attachment" id="attachment" [(ngModel)]="card.attachment">
+    </div>
     
     Adjuntos
     <ul>
@@ -40,7 +52,7 @@
     </ul>
 
     <div class="row">
-        <button type="submit" class="btn btn-primary" (click)="onSubmit($event)" #submitButton>Aceptar</button>
+        <button type="submit" class="btn btn-primary" (click)="onSubmit($event, attachment)" #submitButton>Aceptar</button>
         <a href="/cards" class="btn">Cancelar</a>
     </div>
 </form>

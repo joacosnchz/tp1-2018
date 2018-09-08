@@ -12,6 +12,7 @@ export class CardDetailComponent implements OnInit {
     lists;
     mostrarError = false;
     mostrarErrorAdjuntos = false;
+    mostrarErrorNuevoAdjunto = false;
     attachments;
 
     constructor(private router : Router, private route: ActivatedRoute, private api : TrelloService) { }
@@ -35,14 +36,22 @@ export class CardDetailComponent implements OnInit {
         });
     }
 
-    onSubmit(e) {
+    onSubmit(e, attachment) {
         e.preventDefault();
         e.target.innerHTML = 'Cargando...';
         e.target.disabled = true;
         e.target.className = 'btn btn-secondary';
 
         this.api.update(this.card).subscribe(() => {
-            this.router.navigate(['/cards']);
+            this.api.newAttachment(this.card.id, attachment.files[0]).subscribe(() => {
+                this.router.navigate(['/cards']);
+            }, err => {
+                console.log(err);
+                this.mostrarErrorNuevoAdjunto = true;
+                e.target.innerHTML = 'Aceptar';
+                e.target.className = 'btn btn-primary';
+                e.target.disabled = false;
+            });
         }, error => {
             console.log(error);
             this.mostrarError = true;
