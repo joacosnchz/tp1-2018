@@ -6,7 +6,7 @@
 			<div class="card-body">
 				<ul>
 					<li *ngFor="let card of list.data">
-						<a [routerLink]="['/details', card.id]">{{ card.name }}</a> - <a href="#" (click)="onDeleteClick($event, card.id)">Eliminar</a>
+						<a [routerLink]="['/details', card.id]">{{ card.name }}</a>&nbsp;<a href="#" (click)="onDeleteClick($event, card.id)" style="color:red"><span aria-hidden="true">&times;</span></a>
 					</li>
 				</ul>
 			</div>
