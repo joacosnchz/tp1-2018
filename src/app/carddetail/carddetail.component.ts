@@ -14,6 +14,7 @@ export class CardDetailComponent implements OnInit {
     mostrarErrorAdjuntos = false;
     mostrarErrorNuevoAdjunto = false;
     attachments;
+    cargando = false;
 
     constructor(private router : Router, private route: ActivatedRoute, private api : TrelloService) { }
 
@@ -38,41 +39,38 @@ export class CardDetailComponent implements OnInit {
 
     onSubmit(e, attachment) {
         e.preventDefault();
-        e.target.innerHTML = 'Cargando...';
-        e.target.disabled = true;
-        e.target.className = 'btn btn-secondary';
+        this.cargando = true;
 
         this.api.update(this.card).subscribe(() => {
-            this.api.newAttachment(this.card.id, attachment.files[0]).subscribe(() => {
+            if(attachment.files[0]) {
+                this.api.newAttachment(this.card.id, attachment.files[0]).subscribe(() => {
+                    this.router.navigate(['/cards']);
+                }, err => {
+                    console.log(err);
+                    this.mostrarErrorNuevoAdjunto = true;
+                    this.cargando = false;
+                });
+            } else {
                 this.router.navigate(['/cards']);
-            }, err => {
-                console.log(err);
-                this.mostrarErrorNuevoAdjunto = true;
-                e.target.innerHTML = 'Aceptar';
-                e.target.className = 'btn btn-primary';
-                e.target.disabled = false;
-            });
+            }
         }, error => {
             console.log(error);
             this.mostrarError = true;
-            e.target.innerHTML = 'Aceptar';
-            e.target.className = 'btn btn-primary';
-            e.target.disabled = false;
+            this.cargando = false;
         });
     }
 
     deleteAttachment(e, idAttachment) {
         e.preventDefault();
-        let previousText = e.target.innerHTML;
-        e.target.innerHTML = 'Cargando...';
+        this.cargando = true;
 
         this.api.deleteAttachment(this.card.id, idAttachment).subscribe(() => {
             this.loadAttachments();
-            e.target.innerHTML = previousText;
+            this.cargando = false;
         }, error => {
             console.log(error);
             this.mostrarErrorAdjuntos = true;
-            e.target.innerHTML = previousText;
+            this.cargando = false;
         });
     }
 }

@@ -11,6 +11,9 @@ export class NewcardComponent implements OnInit {
     @Input() card;
     @Output() submitClicked = new EventEmitter<any>();
     lists;
+    mostrarErrorCarga = false;
+    mostrarErrorAdjunto = false;
+    cargando = false;
   
 	constructor(private router : Router, private api: TrelloService) { 
         this.lists = api.getLists();
@@ -32,15 +35,20 @@ export class NewcardComponent implements OnInit {
 
 	onClickAceptar(e, attachment) {
         e.preventDefault();
+        this.cargando = true;
 
 		this.api.newCard(this.card).subscribe((createdCard:any) => {
             this.api.newAttachment(createdCard.id, attachment.files[0]).subscribe(() => {
                 this.router.navigate(['/cards']);
-            }, (err) => {
+            }, err => {
                 console.log(err);
+                this.mostrarErrorAdjunto = true;
+                this.cargando = false;
             });
-        }, (err) => {
+        }, err => {
             console.log(err);
-        }); 
+            this.mostrarErrorCarga = true;
+            this.cargando = false;
+        });
 	}
 }

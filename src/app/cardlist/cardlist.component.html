@@ -1,5 +1,8 @@
-<div class="row">
+<div class="alert alert-danger" role="alert" *ngIf="mostrarError">
+    Hubo un problema obtieniendo la lista de cartas, por favor intente nuevamente.
+</div>
 
+<div class="row">
 	<div class="col" *ngFor="let list of lists">
 		<div class="card">
 			<div class="card-header">{{list.name}}</div>
@@ -12,5 +15,4 @@
 			</div>
 		</div>
 	</div>
-
 </div>
