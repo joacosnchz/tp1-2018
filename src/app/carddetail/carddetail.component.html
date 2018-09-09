@@ -1,14 +1,10 @@
-<div class="alert alert-danger" role="alert" *ngIf="mostrarError">
-    Hubo un problema actualizando la carta, por favor intente nuevamente.
+<div class="alert alert-danger" role="alert" *ngIf="mostrarErrorActualizar || mostrarErrorAdjuntos || mostrarErrorCrear || mostrarErrorNuevoAdjunto">
+    <span *ngIf="mostrarErrorActualizar" >Hubo un problema actualizando la carta, por favor intente nuevamente.</span>
+    <span *ngIf="mostrarErrorCrear" >Hubo un problema creando la carta, por favor intente nuevamente.</span>
+    <span *ngIf="mostrarErrorAdjuntos" >Hubo un problema eliminando el adjunto, por favor intente nuevamente.</span>
+    <span *ngIf="mostrarErrorNuevoAdjunto">Hubo un problema cargando el adjunto, por favor intente nuevamente.</span>
 </div>
 
-<div class="alert alert-danger" role="alert" *ngIf="mostrarErrorAdjuntos">
-    Hubo un problema eliminando el adjunto, por favor intente nuevamente.
-</div>
-
-<div class="alert alert-danger" role="alert" *ngIf="mostrarErrorNuevoAdjunto">
-    Hubo un problema cargando el adjunto, por favor intente nuevamente.
-</div>
 
 <form action="#" (ngSubmit)="onSubmit(attachment)" #userForm>
 	<div class="form-group">
@@ -29,22 +25,22 @@
     </div>
 
     <div class="form-group">
-        <label for="attachment">Agregar adjunto</label>
-        <input type="file" class="form-control" #attachment name="attachment" id="attachment" [(ngModel)]="card.attachment">
+        <label for="attachment">Adjunto</label>
+        <ul *ngIf="card.id !== ''">
+            <li *ngIf="!card.attachments?.length > 0">Ningun archivo adjunto</li>
+            <li *ngFor="let attachment of card.attachments">
+                <a href="{{ attachment.url }}" target="_blank">{{ attachment.name }}</a>
+                <a href="#" (click)="deleteAttachment($event, attachment.id)" style="color:red"><span aria-hidden="true">&times;</span></a>
+            </li>
+        </ul>
+        <label for="attachment">Agregar Adjunto</label>
+        <input type="file" class="form-control" #attachment name="attachment" (change)="fileChange($event)" id="attachment">
     </div>
-    
-    Adjuntos
-    <ul>
-        <li *ngIf="!attachments?.length > 0">Ningun adjunto</li>
-        <li *ngFor="let attachment of attachments">
-            <a href="{{ attachment.url }}" target="_blank">{{ attachment.name }}</a>
-            <a href="#" (click)="deleteAttachment($event, attachment.id)" style="color:red"><span aria-hidden="true">&times;</span></a>
-        </li>
-    </ul>
 
     <div class="row">
-        <button type="submit" [disabled]="!descriptionControl.valid || !nombreControl.valid || !listaControl.valid" class="btn btn-primary" *ngIf="!cargando">Aceptar</button>
+        <button type="submit" [disabled]="!descriptionControl.valid || !nombreControl.valid || !listaControl.valid" class="btn btn-primary" *ngIf="!cargando" (click)="onClickAceptar($event)">Aceptar</button>
         <button class="btn btn-secondary" *ngIf="cargando">Cargando...</button>
         <a href="/cards" class="btn">Cancelar</a>
     </div>
+
 </form>
