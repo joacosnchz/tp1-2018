@@ -5,7 +5,7 @@ import { CardDetailComponent } from './carddetail/carddetail.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'cards', pathMatch: 'full' }, // default route
-  { path: 'newcard', component: NewcardComponent },
+  { path: 'newcard', component: CardDetailComponent },
   { path: 'cards', component: CardListComponent },
   { path: 'details/:id', component: CardDetailComponent }
 ];
