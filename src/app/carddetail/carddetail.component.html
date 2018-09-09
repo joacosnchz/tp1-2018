@@ -1,16 +1,13 @@
-<div class="alert alert-danger" role="alert" *ngIf="mostrarError">
-    Hubo un problema actualizando la carta, por favor intente nuevamente.
+<div class="alert alert-danger" role="alert" *ngIf="mostrarError || mostrarErrorCrear || mostrarErrorAdjuntos">
+    <span *ngIf="mostrarError" >Hubo un problema actualizando la carta, por favor intente nuevamente.</span>
+    <span *ngIf="mostrarErrorCrear" >Hubo un problema creando la carta, por favor intente nuevamente.</span>
+    <span *ngIf="mostrarErrorAdjuntos" >Hubo un problema eliminando el adjunto, por favor intente nuevamente.</span>
+    
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
     </button>
 </div>
 
-<div class="alert alert-danger" role="alert" *ngIf="mostrarErrorAdjuntos">
-        Hubo un problema eliminando el adjunto, por favor intente nuevamente.
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
 
 <form action="#" #userForm>
 	<div class="form-group">
