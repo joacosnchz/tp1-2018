@@ -26,18 +26,24 @@
             <option *ngFor="let list of lists" value="{{ list.id }}">{{ list.name }}</option>
         </select>
     </div>
-    
-    Adjuntos
-    <ul>
-        <li *ngIf="!attachments?.length > 0">Ningun adjunto</li>
-        <li *ngFor="let attachment of attachments">
-            <a href="{{ attachment.url }}" target="_blank">{{ attachment.name }}</a>
-            <a href="#" (click)="deleteAttachment($event, attachment.id)" style="color:red"><span aria-hidden="true">&times;</span></a>
-        </li>
-    </ul>
+
+
+    <div class="form-group">
+        <label for="attachment">Adjunto</label>
+        <ul *ngIf="card.id !== ''">
+            <li *ngIf="!card.attachments?.length > 0">Ningun archivo adjunto</li>
+            <li *ngFor="let attachment of card.attachments">
+                <a href="{{ attachment.url }}" target="_blank">{{ attachment.name }}</a>
+                <a href="#" (click)="deleteAttachment($event, attachment.id)" style="color:red"><span aria-hidden="true">&times;</span></a>
+            </li>
+        </ul>
+        <label for="attachment">Agregar Adjunto</label>
+        <input type="file" class="form-control" #attachment name="attachment" (change)="fileChange($event)" id="attachment">
+    </div>
 
     <div class="row">
-        <button type="submit" class="btn btn-primary" (click)="onSubmit($event)" #submitButton>Aceptar</button>
+        <button type="submit" class="btn btn-primary" (click)="onClickAceptar($event)">Aceptar</button>
         <a href="/cards" class="btn">Cancelar</a>
     </div>
+
 </form>
