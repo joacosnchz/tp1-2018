@@ -13,6 +13,7 @@ export class CardListComponent implements OnInit {
   todoCards;
   doingCards;
   doneCards;
+  mostrarError = false;
 
   constructor(private api : TrelloService) { 
     this.todoCards = new Array();
@@ -31,16 +32,25 @@ export class CardListComponent implements OnInit {
     this.api.getTodo().subscribe((data) => {
       this.todoCards = data;
       this.updateLists();
+    }, err => {
+        console.log(err);
+        this.mostrarError = true;
     });
 
     this.api.getDoing().subscribe((data) => {
         this.doingCards = data;
         this.updateLists();
+    }, err => {
+        console.log(err);
+        this.mostrarError = true;
     });
 
     this.api.getDone().subscribe((data) => {
         this.doneCards = data;
         this.updateLists();
+    }, err => {
+        console.log(err);
+        this.mostrarError = true;
     });
   }
 

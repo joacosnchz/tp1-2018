@@ -11,10 +11,12 @@ export class CardDetailComponent implements OnInit {
     @Input() card:any = {};
 
     lists;
-    mostrarError = false;
+    mostrarErrorActualizar = false;
     mostrarErrorAdjuntos = false;
     mostrarErrorCrear = false;
-    mostrarErrorCrearAdjunto = false;
+    mostrarErrorNuevoAdjunto = false;
+    attachments;
+    cargando = false;
 
     constructor(private router : Router, 
                 private route: ActivatedRoute, 
@@ -58,10 +60,7 @@ export class CardDetailComponent implements OnInit {
     }
 
     onClickAceptar(e) {
-        e.preventDefault();
-        e.target.innerHTML = 'Cargando...';
-        e.target.disabled = true;
-        e.target.className = 'btn btn-secondary';
+        this.cargando = true;
 
         if (this.card.id !== ''){
             this.updateCard(e);
@@ -76,16 +75,15 @@ export class CardDetailComponent implements OnInit {
             this.router.navigate(['/cards']);
         }, err => {
             console.log(err);
-            this.mostrarError = true;
-            e.target.innerHTML = 'Aceptar';
-            e.target.className = 'btn btn-primary';
-            e.target.disabled = false;
-        });
+            this.mostrarErrorActualizar = true;
+            this.cargando = false;
+        }); 
     }
 
     createCard(e){
         this.api.newCard(this.card).subscribe((createdCard:any) => {
             this.addAttachment(e, createdCard);
+            this.router.navigate(['/cards']);
         }, err => { 
             console.log(err);
             this.mostrarErrorCrear = true;
@@ -106,11 +104,11 @@ export class CardDetailComponent implements OnInit {
             e.target.innerHTML = 'Cargando...';
 
             this.api.newAttachment(card.id, this.card.attachment).subscribe(() => {
-                this.router.navigate(['/cards']);
                 e.target.innerHTML = previousText;
             }, err => { 
                 console.log(err);
-                this.mostrarErrorCrearAdjunto = true;
+                this.mostrarErrorNuevoAdjunto = true;
+                this.cargando = false;
                 e.target.innerHTML = previousText;
              });
         }
@@ -118,16 +116,15 @@ export class CardDetailComponent implements OnInit {
 
     deleteAttachment(e, idAttachment) {
         e.preventDefault();
-        let previousText = e.target.innerHTML;
-        e.target.innerHTML = 'Cargando...';
+        this.cargando = true;
 
         this.api.deleteAttachment(this.card.id, idAttachment).subscribe(() => {
             this.loadAttachments();
-            e.target.innerHTML = previousText;
+            this.cargando = false;
         }, error => {
             console.log(error);
             this.mostrarErrorAdjuntos = true;
-            e.target.innerHTML = previousText;
+            this.cargando = false;
         });
     }
 }
