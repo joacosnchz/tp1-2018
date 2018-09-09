@@ -39,7 +39,7 @@ export class TrelloService {
     }
 
     newCard(card){
-        return this.http.post(this.endpoint + '/cards?' + this.credentials, {name:  card.nombre, desc: card.desc, idList: card.idList});
+        return this.http.post(this.endpoint + '/cards?' + this.credentials, {name:  card.name, desc: card.desc, idList: card.idList});
     }
 
     newAttachment(idCard, attachment) {

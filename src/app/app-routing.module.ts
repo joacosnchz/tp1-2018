@@ -1,5 +1,4 @@
 import { RouterModule, Routes } from '@angular/router';
-import { NewcardComponent } from './newcard/newcard.component';
 import { CardListComponent } from './cardlist/cardlist.component';
 import { CardDetailComponent } from './carddetail/carddetail.component';
 

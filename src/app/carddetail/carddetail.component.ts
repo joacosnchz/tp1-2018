@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { TrelloService }  from '../../trello/trello.api';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-carddetail',
@@ -59,20 +60,21 @@ export class CardDetailComponent implements OnInit {
         });
     }
 
-    onClickAceptar(e) {
+    onSubmit() {
         this.cargando = true;
 
         if (this.card.id !== ''){
-            this.updateCard(e);
-            this.addAttachment(e, this.card);
+            this.updateCard();
         } else {
-            this.createCard(e);
+            this.createCard();
         }
     }
     
-    updateCard(e){
+    updateCard(){
         this.api.update(this.card).subscribe(() => {
-            this.router.navigate(['/cards']);
+            this.addAttachment(this.card).subscribe(() => {
+                this.router.navigate(['/cards']);
+            });
         }, err => {
             console.log(err);
             this.mostrarErrorActualizar = true;
@@ -80,38 +82,38 @@ export class CardDetailComponent implements OnInit {
         }); 
     }
 
-    createCard(e){
+    createCard(){
         this.api.newCard(this.card).subscribe((createdCard:any) => {
-            this.addAttachment(e, createdCard);
-            this.router.navigate(['/cards']);
+            this.addAttachment(createdCard).subscribe(() => {
+                this.router.navigate(['/cards']);
+            });
         }, err => { 
             console.log(err);
             this.mostrarErrorCrear = true;
-            e.target.innerHTML = 'Aceptar';
-            e.target.className = 'btn btn-primary';
-            e.target.disabled = false;
-        }); 
+            this.cargando = false;
+        });
     }
 
-    fileChange(e) {
-        this.card.attachment = e.target.files[0];
+    fileChange(attachment) {
+        this.card.attachment = attachment.files[0];
     }
 
-    addAttachment(e, card){
-        if (this.card.attachment !== null){ 
-            
-            let previousText = e.target.innerHTML;
-            e.target.innerHTML = 'Cargando...';
+    addAttachment(card) {
+        let obs = new Observable(observer => {
+            if (this.card.attachment){ 
+                this.api.newAttachment(card.id, this.card.attachment).subscribe(() => {
+                    observer.next();
+                }, err => { 
+                    console.log(err);
+                    this.mostrarErrorNuevoAdjunto = true;
+                    this.cargando = false;
+                });
+            } else {
+                observer.next();
+            }
+        });
 
-            this.api.newAttachment(card.id, this.card.attachment).subscribe(() => {
-                e.target.innerHTML = previousText;
-            }, err => { 
-                console.log(err);
-                this.mostrarErrorNuevoAdjunto = true;
-                this.cargando = false;
-                e.target.innerHTML = previousText;
-             });
-        }
+        return obs;
     }
 
     deleteAttachment(e, idAttachment) {
