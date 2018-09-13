@@ -9,17 +9,20 @@ import { routing } from './app-routing.module';
 import { CardListComponent } from './cardlist/cardlist.component';
 import { CardDetailComponent } from './carddetail/carddetail.component';
 
+import { SearchBoxPipe } from './search-box.pipe';
+
 @NgModule({
-  declarations: [
-    AppComponent,
-    CardListComponent,
-    CardDetailComponent,
-  ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpClientModule,
     routing
+  ],
+  declarations: [
+    AppComponent,
+    CardListComponent,
+    CardDetailComponent,
+    SearchBoxPipe,
   ],
   providers: [
     TrelloService

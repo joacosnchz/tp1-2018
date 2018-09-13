@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TrelloService }  from '../../trello/trello.api';
 import { dashCaseToCamelCase } from '@angular/compiler/src/util';
 
+
 @Component({
   selector: 'app-cardlist',
   templateUrl: './cardlist.component.html',
