@@ -4,7 +4,7 @@ ul {
 }
 
 .searchBox{
-    margin: 20px auto;
+    margin: 15px 0 0 0;
 }
 
 .cancelButton{
@@ -14,4 +14,8 @@ ul {
 
 .cardLink, .cancelButton{
     font-size: 14pt;
+}
+
+.card{
+    margin-top:15px;
 }
