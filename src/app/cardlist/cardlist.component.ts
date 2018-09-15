@@ -15,6 +15,7 @@ export class CardListComponent implements OnInit {
   doingCards;
   doneCards;
   mostrarError = false;
+  searchText: string = "";
 
   constructor(private api : TrelloService) { 
     this.todoCards = new Array();
