@@ -1,11 +1,13 @@
 <div class="alert alert-danger" role="alert" *ngIf="mostrarError">
     Hubo un problema obtieniendo la lista de cartas, por favor intente nuevamente.
 </div>
-<div id="custom-search-input">
+
+<div class="searchBox">
 	<div class="input-group col-md-12">
-		<input [(ngModel)]="searchText" class="form-control input-lg" placeholder="Buscar Tarjeta" />
+		<input [(ngModel)]="searchText" class="form-control input-lg" placeholder="Buscar Tarjeta por Nombre" />
 	</div>
 </div>
+
 <div class="row">
 	<div class="col" *ngFor="let list of lists">
 		<div class="card">
@@ -13,7 +15,7 @@
 			<div class="card-body">
 				<ul>
 					<li *ngFor="let card of list.data | searchBox: searchText">
-						<a [routerLink]="['/details', card.id]">{{ card.name }}</a>&nbsp;<a href="#" (click)="onDeleteClick($event, card.id)" style="color:red"><span aria-hidden="true">&times;</span></a>
+						<a [routerLink]="['/details', card.id]" class="cardLink">{{ card.name }}</a>&nbsp;<a href="#" (click)="onDeleteClick($event, card.id)"  class="cancelButton float-right"><span aria-hidden="true">&times;</span></a>
 					</li>
 				</ul>
 			</div>
