@@ -1,3 +1,21 @@
 ul {
     list-style: none;
+    padding-left: 10px;
+}
+
+.searchBox{
+    margin: 15px 0 0 0;
+}
+
+.cancelButton{
+    color:red;
+    font-weight: bold;
+}
+
+.cardLink, .cancelButton{
+    font-size: 14pt;
+}
+
+.card{
+    margin-top:15px;
 }
