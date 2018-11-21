@@ -70,7 +70,7 @@ export class CardDetailComponent implements OnInit {
         }
     }
     
-    updateCard(){
+    updateCard() {
         this.api.update(this.card).subscribe(() => {
             this.addAttachment(this.card).subscribe(() => {
                 this.router.navigate(['/cards']);

@@ -30,7 +30,7 @@
             <li *ngIf="!card.attachments?.length > 0">Ningun archivo adjunto</li>
             <li *ngFor="let attachment of card.attachments">
                 <a href="{{ attachment.url }}" target="_blank">{{ attachment.name }}</a>
-                <a href="#" (click)="deleteAttachment($event, attachment.id)" class="cancelButton"><span aria-hidden="true">&times;</span></a>
+                <a href="#" (click)="deleteAttachment($event, attachment._id.toString())" class="cancelButton"><span aria-hidden="true">&times;</span></a>
             </li>
         </ul>
         <label for="attachment">Agregar Adjunto</label>
