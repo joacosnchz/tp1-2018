@@ -3,12 +3,22 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class TrelloService {
-    private endpoint = 'https://api.trello.com/1';
-    private credentials = 'key=7826a7def1803a362b55c90ac66ab5f1&token=397ec8296006a8e06835afdcbe0b3e4e6bacce8848945ac19870599d171a0959';
-    private board = 'CeLcNDVU';
-    private lists = [{id: '5b6b420b6125170fa01f86f0', name: 'To Do'},
-        {id: '5b6b420c4dd9240f4b1e4f3f', name: 'Doing'},
-        {id: '5b6b420d3579f37d55b18226', name: 'Done'}];
+    // private endpoint = 'https://api.trello.com/1';
+    // private credentials = 'key=7826a7def1803a362b55c90ac66ab5f1&token=397ec8296006a8e06835afdcbe0b3e4e6bacce8848945ac19870599d171a0959';
+    // private board = 'CeLcNDVU';
+
+    // private lists = [{id: '5b6b420b6125170fa01f86f0', name: 'To Do'},
+    // {id: '5b6b420c4dd9240f4b1e4f3f', name: 'Doing'},
+    // {id: '5b6b420d3579f37d55b18226', name: 'Done'}];
+
+    
+    private endpoint = 'http://127.0.0.1:3000';
+    private credentials = '';
+    private board = '5bf5c6885d0cc6268dd12593';
+
+    private lists = [{id: '5bf5c6fc5d0cc6268dd12594', name: 'To Do'},
+        {id: '5bf5c7015d0cc6268dd12595', name: 'Doing'},
+        {id: '5bf5c7065d0cc6268dd12596', name: 'Done'}];
 
     constructor(private http: HttpClient) {
         
