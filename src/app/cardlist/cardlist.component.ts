@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TrelloService }  from '../../trello/trello.api';
-import { dashCaseToCamelCase } from '@angular/compiler/src/util';
-
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cardlist',
@@ -17,12 +16,18 @@ export class CardListComponent implements OnInit {
   mostrarError = false;
   searchText: string = "";
 
-  constructor(private api : TrelloService) { 
-    this.todoCards = new Array();
-    this.doingCards = new Array();
-    this.doneCards = new Array();
-    this.getAllCards();
-  } 
+  constructor(private api : TrelloService, private router : Router) { } 
+  
+  ngOnInit() {
+    if(this.api.hasCredentials()) {
+      this.todoCards = new Array();
+      this.doingCards = new Array();
+      this.doneCards = new Array();
+      this.getAllCards();
+    } else {
+      this.router.navigate(['login']);
+    }
+  }
 
   updateLists(){
     this.lists = [{name:'To Do',data:this.todoCards}, 
@@ -54,9 +59,6 @@ export class CardListComponent implements OnInit {
         console.log(err);
         this.mostrarError = true;
     });
-  }
-
-  ngOnInit() {
   }
 
   onDeleteClick(e, id) {

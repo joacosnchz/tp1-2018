@@ -24,16 +24,20 @@ export class CardDetailComponent implements OnInit {
                 private api : TrelloService) { }
 
     ngOnInit() {
+      if(this.api.hasCredentials()) {
         this.lists = this.api.getLists();
 
         this.route.params.subscribe(params => {
-            if ( params['id'] ){
-                this.loadCardById(params['id']);                
-            } else {
-                this.initCard();
-            }
+          if ( params['id'] ){
+            this.loadCardById(params['id']);                
+          } else {
+            this.initCard();
+          }
             
         });
+      } else {
+        this.router.navigate(['login']);
+      }
     }
 
     loadCardById(id){
