@@ -1,8 +1,9 @@
-<div class="alert alert-danger" role="alert" *ngIf="mostrarErrorActualizar || mostrarErrorAdjuntos || mostrarErrorCrear || mostrarErrorNuevoAdjunto">
+<div class="alert alert-danger" role="alert" *ngIf="mostrarErrorActualizar || mostrarErrorAdjuntos || mostrarErrorCrear || mostrarErrorNuevoAdjunto || mostrarErrorCargar">
     <span *ngIf="mostrarErrorActualizar" >Hubo un problema actualizando la carta, por favor intente nuevamente.</span>
     <span *ngIf="mostrarErrorCrear" >Hubo un problema creando la carta, por favor intente nuevamente.</span>
     <span *ngIf="mostrarErrorAdjuntos" >Hubo un problema eliminando el adjunto, por favor intente nuevamente.</span>
     <span *ngIf="mostrarErrorNuevoAdjunto">Hubo un problema cargando el adjunto, por favor intente nuevamente.</span>
+    <span *ngIf="mostrarErrorCargar" >Hubo un problema cargando la carta, por favor intente nuevamente.</span>
 </div>
 
 

@@ -2,6 +2,10 @@
     Hubo un problema obtieniendo la lista de cartas, por favor intente nuevamente.
 </div>
 
+<div class="alert alert-danger" role="alert" *ngIf="mostrarErrorEliminar">
+  Hubo un problema eliminando la carta, por favor intente nuevamente.
+</div>
+
 <div class="searchBox">
 	<div class="input-group col-md-12">
 		<input [(ngModel)]="searchText" class="form-control input-lg" placeholder="Buscar Tarjeta por Nombre" />

@@ -16,6 +16,7 @@ export class CardDetailComponent implements OnInit {
     mostrarErrorAdjuntos = false;
     mostrarErrorCrear = false;
     mostrarErrorNuevoAdjunto = false;
+    mostrarErrorCargar = false;
     attachments;
     cargando = false;
 
@@ -42,10 +43,13 @@ export class CardDetailComponent implements OnInit {
 
     loadCardById(id){
         this.card.id = id;
-        this.api.getCard(this.card).subscribe(card => {
+        this.api.getCard(this.card).then(card => {
             this.card = card;
             this.loadAttachments();
-        });        
+        }).catch(err => {
+          console.log(err);
+          this.mostrarErrorCargar = true;
+        });
     }
 
     initCard() {
@@ -59,7 +63,7 @@ export class CardDetailComponent implements OnInit {
 	}
 
     loadAttachments() {
-        this.api.getCardAttachments(this.card.id).subscribe(attachments => {
+        this.api.getCardAttachments(this.card.id).then(attachments => {
             this.card.attachments = attachments;
         });
     }
@@ -75,11 +79,11 @@ export class CardDetailComponent implements OnInit {
     }
     
     updateCard() {
-        this.api.update(this.card).subscribe(() => {
+        this.api.update(this.card).then(() => {
             this.addAttachment(this.card).subscribe(() => {
                 this.router.navigate(['/cards']);
             });
-        }, err => {
+        }).catch(err => {
             console.log(err);
             this.mostrarErrorActualizar = true;
             this.cargando = false;
@@ -87,11 +91,11 @@ export class CardDetailComponent implements OnInit {
     }
 
     createCard(){
-        this.api.newCard(this.card).subscribe((createdCard:any) => {
+        this.api.newCard(this.card).then((createdCard:any) => {
             this.addAttachment(createdCard).subscribe(() => {
                 this.router.navigate(['/cards']);
             });
-        }, err => { 
+        }).catch(err => { 
             console.log(err);
             this.mostrarErrorCrear = true;
             this.cargando = false;
@@ -105,9 +109,9 @@ export class CardDetailComponent implements OnInit {
     addAttachment(card) {
         let obs = new Observable(observer => {
             if (this.card.attachment){ 
-                this.api.newAttachment(card.id, this.card.attachment).subscribe(() => {
+                this.api.newAttachment(card.id, this.card.attachment).then(() => {
                     observer.next();
-                }, err => { 
+                }).catch(err => { 
                     console.log(err);
                     this.mostrarErrorNuevoAdjunto = true;
                     this.cargando = false;
@@ -124,10 +128,10 @@ export class CardDetailComponent implements OnInit {
         e.preventDefault();
         this.cargando = true;
 
-        this.api.deleteAttachment(this.card.id, idAttachment).subscribe(() => {
+        this.api.deleteAttachment(this.card.id, idAttachment).then(() => {
             this.loadAttachments();
             this.cargando = false;
-        }, error => {
+        }).catch(error => {
             console.log(error);
             this.mostrarErrorAdjuntos = true;
             this.cargando = false;

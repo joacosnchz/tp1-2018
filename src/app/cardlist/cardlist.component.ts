@@ -14,6 +14,7 @@ export class CardListComponent implements OnInit {
   doingCards;
   doneCards;
   mostrarError = false;
+  mostrarErrorEliminar = false;
   searchText: string = "";
 
   constructor(private api : TrelloService, private router : Router) { } 
@@ -36,26 +37,26 @@ export class CardListComponent implements OnInit {
   }
 
   getAllCards() {
-    this.api.getTodo().subscribe((data) => {
+    this.api.getTodo().then((data) => {
       this.todoCards = data;
       this.updateLists();
-    }, err => {
+    }).catch(err => {
         console.log(err);
         this.mostrarError = true;
     });
 
-    this.api.getDoing().subscribe((data) => {
+    this.api.getDoing().then((data) => {
         this.doingCards = data;
         this.updateLists();
-    }, err => {
+    }).catch(err => {
         console.log(err);
         this.mostrarError = true;
     });
 
-    this.api.getDone().subscribe((data) => {
+    this.api.getDone().then((data) => {
         this.doneCards = data;
         this.updateLists();
-    }, err => {
+    }).catch(err => {
         console.log(err);
         this.mostrarError = true;
     });
@@ -64,8 +65,11 @@ export class CardListComponent implements OnInit {
   onDeleteClick(e, id) {
     e.preventDefault();
 
-    this.api.delete(id).subscribe(() => {
+    this.api.delete(id).then(() => {
       this.getAllCards();
+    }).catch(err => {
+      console.log(err);
+      this.mostrarErrorEliminar = true;
     });
   }
 
