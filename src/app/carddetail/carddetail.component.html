@@ -1,3 +1,5 @@
+<app-header></app-header>
+
 <div class="alert alert-danger" role="alert" *ngIf="mostrarErrorActualizar || mostrarErrorAdjuntos || mostrarErrorCrear || mostrarErrorNuevoAdjunto || mostrarErrorCargar">
     <span *ngIf="mostrarErrorActualizar" >Hubo un problema actualizando la carta, por favor intente nuevamente.</span>
     <span *ngIf="mostrarErrorCrear" >Hubo un problema creando la carta, por favor intente nuevamente.</span>
@@ -5,7 +7,6 @@
     <span *ngIf="mostrarErrorNuevoAdjunto">Hubo un problema cargando el adjunto, por favor intente nuevamente.</span>
     <span *ngIf="mostrarErrorCargar" >Hubo un problema cargando la carta, por favor intente nuevamente.</span>
 </div>
-
 
 <form class="formContainer" action="#" (ngSubmit)="onSubmit()" #userForm>
 	<div class="form-group">
@@ -41,7 +42,7 @@
     <div class="row float-right">
         <button class="btn btn-primary formButton" type="submit" [disabled]="!descriptionControl.valid || !nombreControl.valid || !listaControl.valid" *ngIf="!cargando" >Aceptar</button>
         <button class="btn btn-secondary formButton" *ngIf="cargando">Cargando...</button>
-        <a href="/cards" class="btn formButton">Cancelar</a>
+        <a routerLink="/cards" class="btn formButton">Cancelar</a>
     </div>
 
 </form>

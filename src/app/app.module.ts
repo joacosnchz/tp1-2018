@@ -12,6 +12,7 @@ import { CardDetailComponent } from './carddetail/carddetail.component';
 import { SearchBoxPipe } from './search-box.pipe';
 import { LoginComponent } from './login/login.component';
 import { LogoutComponent } from './logout/logout.component';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
   imports: [
@@ -27,6 +28,7 @@ import { LogoutComponent } from './logout/logout.component';
     SearchBoxPipe,
     LoginComponent,
     LogoutComponent,
+    HeaderComponent,
   ],
   providers: [
     TrelloService
