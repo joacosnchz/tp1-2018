@@ -19,19 +19,21 @@ export class TrelloService {
     private credentials = '';
     private headers = null;
     private refreshing = false;
+    private storage;
 
     private lists = [{id: '5bf5c6fc5d0cc6268dd12594', name: 'To Do'},
         {id: '5bf5c7015d0cc6268dd12595', name: 'Doing'},
         {id: '5bf5c7065d0cc6268dd12596', name: 'Done'}];
 
     constructor(private http: HttpClient) {
+      this.storage = sessionStorage;
+
       if(!this.credentials && !this.headers) {
-        
         this.headers = new HttpHeaders({
-          'Authorization': 'Bearer ' + sessionStorage.getItem("authorization")
+          'Authorization': 'Bearer ' + this.storage.getItem("authorization")
         });
   
-        this.credentials = 'accessToken=' + sessionStorage.getItem("token");
+        this.credentials = 'accessToken=' + this.storage.getItem("token");
       } 
     }
 
@@ -43,7 +45,7 @@ export class TrelloService {
 
       return new Observable(observer => {
         this.http.get('assets/config/' + file).subscribe((res:any) => {
-          sessionStorage.setItem('authorization', res.auth);
+          this.storage.setItem('authorization', res.auth);
           this.headers = new HttpHeaders({
             'Authorization': 'Bearer ' + res.auth
           });
@@ -65,13 +67,19 @@ export class TrelloService {
       });
     }
 
+    logout() {
+      this.storage.removeItem("authorization");
+      this.storage.removeItem('token');
+      this.storage.removeItem('refresh');
+    }
+
     refreshAccessToken() : Promise<any> {
       if(!this.refreshing) {
         this.refreshing = true;
 
         return this.http.post(this.endpoint + '/oauth2/refresh', {
           grant_type: 'refresh_token',
-          refresh_token: sessionStorage.getItem('refresh')
+          refresh_token: this.storage.getItem('refresh')
         }, {
           headers: this.headers
         }).toPromise().then(res => {
@@ -91,13 +99,13 @@ export class TrelloService {
     }
 
     updateUserCredentials(credentials) {
-      sessionStorage.setItem('token', credentials.accessToken);
-      sessionStorage.setItem('refresh', credentials.refreshToken);
+      this.storage.setItem('token', credentials.accessToken);
+      this.storage.setItem('refresh', credentials.refreshToken);
       this.credentials = 'accessToken=' + credentials.accessToken;
     }
 
     hasCredentials() {    
-      if(sessionStorage.getItem("authorization") && sessionStorage.getItem("token")) {
+      if(this.storage.getItem("authorization") && this.storage.getItem("token")) {
         return true;
       } else {
         return false;

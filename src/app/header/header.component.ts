@@ -1,15 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, DoCheck } from '@angular/core';
+import { TrelloService } from '../../trello/trello.api';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements DoCheck {
+  hasCredentials;
 
-  constructor() { }
+  constructor(private api : TrelloService) {  }
 
-  ngOnInit() {
+  ngDoCheck() {
+    this.hasCredentials = this.api.hasCredentials();
   }
 
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { TrelloService } from '../../trello/trello.api';
 
 @Component({
   selector: 'app-logout',
@@ -8,12 +9,10 @@ import { Router } from '@angular/router';
 })
 export class LogoutComponent implements OnInit {
 
-  constructor(private router : Router) { }
+  constructor(private router : Router, private api : TrelloService) { }
 
   ngOnInit() {
-    sessionStorage.removeItem("authorization");
-    sessionStorage.removeItem('token');
-    sessionStorage.removeItem('refresh');
+    this.api.logout();
     this.router.navigate(['login']);
   }
 
