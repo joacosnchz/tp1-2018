@@ -3,6 +3,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { TrelloService }  from '../../trello/trello.api';
 import { Observable } from 'rxjs/Observable';
 
+declare function hasInternetConnection() : boolean;
+
 @Component({
   selector: 'app-carddetail',
   templateUrl: './carddetail.component.html',
@@ -17,6 +19,7 @@ export class CardDetailComponent implements OnInit {
     mostrarErrorCrear = false;
     mostrarErrorNuevoAdjunto = false;
     mostrarErrorCargar = false;
+    mostrarErrorInternet = false;
     attachments;
     cargando = false;
 
@@ -30,7 +33,11 @@ export class CardDetailComponent implements OnInit {
 
         this.route.params.subscribe(params => {
           if ( params['id'] ){
-            this.loadCardById(params['id']);                
+            if(hasInternetConnection()) {
+              this.loadCardById(params['id']);  
+            } else {
+              this.mostrarErrorInternet = true;
+            }              
           } else {
             this.initCard();
           }
@@ -69,13 +76,17 @@ export class CardDetailComponent implements OnInit {
     }
 
     onSubmit() {
+      if(hasInternetConnection()) {
         this.cargando = true;
 
-        if (this.card.id !== ''){
-            this.updateCard();
+        if(this.card.id !== '') {
+          this.updateCard();
         } else {
-            this.createCard();
+          this.createCard();
         }
+      } else {
+        this.mostrarErrorInternet = true;
+      }
     }
     
     updateCard() {

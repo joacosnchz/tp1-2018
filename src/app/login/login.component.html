@@ -4,6 +4,10 @@
     Disculpe, usuario o contraseña incorrectos
 </div>
 
+<div class="alert alert-danger" role="alert" *ngIf="mostrarErrorInternet">
+  Por favor, verifique su conexión a internet
+</div>
+
 <div class="card">
   <div class="card-body">
     <form>

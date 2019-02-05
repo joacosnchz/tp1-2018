@@ -14,7 +14,7 @@ export class TrelloService {
     // {id: '5b6b420d3579f37d55b18226', name: 'Done'}];
 
     
-    private endpoint = 'http://127.0.0.1:3000';
+    private endpoint = 'http://192.168.0.3:3000';
     private board = '5bf5c6885d0cc6268dd12593';
     private credentials = '';
     private headers = null;

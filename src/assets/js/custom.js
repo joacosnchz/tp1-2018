@@ -1,0 +1,3 @@
+function hasInternetConnection () { 
+  return true; 
+}

@@ -8,6 +8,10 @@
   Hubo un problema eliminando la carta, por favor intente nuevamente.
 </div>
 
+<div class="alert alert-danger" role="alert" *ngIf="mostrarErrorInternet">
+  Por favor, verifique su conexión a internet
+</div>
+
 <div class="searchBox">
 	<div class="input-group col-md-12">
 		<input [(ngModel)]="searchText" class="form-control input-lg" placeholder="Buscar Tarjeta por Nombre" />

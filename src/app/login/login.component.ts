@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { TrelloService } from '../../trello/trello.api';
 import { Router } from '@angular/router';
 
+declare function hasInternetConnection() : boolean;
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -11,6 +13,7 @@ export class LoginComponent implements OnInit {
   username;
   password;
   mostrarError = false;
+  mostrarErrorInternet = false;
 
   constructor(private router : Router, private api : TrelloService) {  }
 
@@ -21,11 +24,15 @@ export class LoginComponent implements OnInit {
   }
 
   onFormSubmit() {
-    this.api.requestAccessToken(this.username, this.password).subscribe(res => {
-      this.router.navigate(['cards']);
-    }, err => {
-      this.mostrarError = true;
-    });
+    if(hasInternetConnection()) {
+      this.api.requestAccessToken(this.username, this.password).subscribe(res => {
+        this.router.navigate(['cards']);
+      }, err => {
+        this.mostrarError = true;
+      });
+    } else {
+      this.mostrarErrorInternet = true;
+    }
   }
 
 }

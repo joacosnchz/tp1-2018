@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { TrelloService }  from '../../trello/trello.api';
 import { Router } from '@angular/router';
 
+declare function hasInternetConnection() : boolean;
+
 @Component({
   selector: 'app-cardlist',
   templateUrl: './cardlist.component.html',
@@ -15,18 +17,23 @@ export class CardListComponent implements OnInit {
   doneCards;
   mostrarError = false;
   mostrarErrorEliminar = false;
+  mostrarErrorInternet = false;
   searchText: string = "";
 
   constructor(private api : TrelloService, private router : Router) { } 
   
   ngOnInit() {
-    if(this.api.hasCredentials()) {
-      this.todoCards = new Array();
-      this.doingCards = new Array();
-      this.doneCards = new Array();
-      this.getAllCards();
+    if(hasInternetConnection()) {
+      if(this.api.hasCredentials()) {
+        this.todoCards = new Array();
+        this.doingCards = new Array();
+        this.doneCards = new Array();
+        this.getAllCards();
+      } else {
+        this.router.navigate(['login']);
+      }
     } else {
-      this.router.navigate(['login']);
+      this.mostrarErrorInternet = true;
     }
   }
 
